@@ -12,7 +12,8 @@ public class FileChooserDemo extends JPanel
                              implements ActionListener {
     static private final String newline = "\n";
     JButton openButton, saveButton;
-    JLabel baseDpLabel = new JLabel("Base DP: 360   ");
+    JLabel baseDpLabel = new JLabel("請先選擇欲複製檔案的來源資料夾,再選擇已篩選過的資料夾 ###### "
+    		+ "最後會把來源資料夾與已篩選過的資料夾中相同的檔案複製到一個新的資料夾內");
     JLabel resultDpLabel = new JLabel("Result DP");
     JTextField resultDpTextField = new JTextField("360");
 
@@ -56,12 +57,12 @@ public class FileChooserDemo extends JPanel
 
         //Create the open button.  We use the image from the JLF
         //Graphics Repository (but we extracted it from the jar).
-        openButton = new JButton("Open file...");
+        openButton = new JButton("Select folder by click on file...");
         openButton.addActionListener(this);
 
         //Create the save button.  We use the image from the JLF
         //Graphics Repository (but we extracted it from the jar).
-        saveButton = new JButton("Translate DP...");
+        saveButton = new JButton("Start copy files");
         saveButton.addActionListener(this);
 
      
@@ -71,8 +72,8 @@ public class FileChooserDemo extends JPanel
         buttonPanel.add(openButton);
         buttonPanel.add(saveButton);
         buttonPanel.add(baseDpLabel);
-        buttonPanel.add(resultDpLabel);
-        buttonPanel.add(resultDpTextField);
+//        buttonPanel.add(resultDpLabel);
+//        buttonPanel.add(resultDpTextField);
 
 
         //Add the buttons and the log to this panel.
@@ -81,10 +82,12 @@ public class FileChooserDemo extends JPanel
     }
 
     public void actionPerformed(ActionEvent e) {
+    	if (mDstPath != "")
+    	 fc.setCurrentDirectory(new File(mDstPath));
+    	
         //Handle open button action.
         if (e.getSource() == openButton) {
             int returnVal = fc.showOpenDialog(FileChooserDemo.this);
-
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 file = fc.getSelectedFile();
                 log.setText(fc.getCurrentDirectory().getName());
